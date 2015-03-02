@@ -43,10 +43,16 @@ Sortierung:
 -----------
 
 	Vorsortierung:
-		- Die 32 TB Daten in 1000 mal 32 GB Chunks aufteilen
-		- Jeden dieser Chunks mit einem parallelen Merge Sort mit Laufzeit O(log n) sortieren und in eine Datei schreiben
+		- Die 32 TB Daten in 1000 mal 32 GB Chunks aufteilen (32GB um bei der eigentlichen Sortierung den halben Arbeitsspeicher zu benutzen, damit bleiben noch ~32GB für den Output Buffer)
+		- Jeden dieser Chunks mit einem parallelen Mergesort mit Laufzeit O(log n) sortieren und in jeweils eine Datei schreiben (Das Ergebnis hierbei sind 1000 Dateien mit jeweils 32GB --> Chunks)
 
+	Sortierverfahren: Externer (paralleler) Mergesort
+		- Aus jedem der 1000 sortierten Chunks mit jeweils 32 GB den obersten Teil herausnehmen und in je einen Input Buffer schreiben (32GB / 1000 = 32MB pro Input Buffer)
+		- Mit dem merge Schritt wieder sortiert zusammenfügen und in den Output Buffer schreiben
+		- Sobald der Output Buffer voll ist, wird er in eine Datei geschrieben, falls diese noch nicht existiert. Falls doch, wird er unten angehängt. Der Output Buffer wird dann geleert.
+		- Sobald ein Input Buffer leer ist, wird er mit Daten aus dem entsprechenden Chunk aufgefüllt
+		- Ergebnis dieses Vorgangs ist eine 32 TB große Datei mit sortierten Daten
 
-
-	Sortierverfahren: Externer (paraleller) Mergesort
-		- 
+Resultat:
+---------
+	
