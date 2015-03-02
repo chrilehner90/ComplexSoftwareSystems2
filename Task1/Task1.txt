@@ -41,7 +41,6 @@ E-Mail Adressen (Annahmen):
 
 Sortierung:
 -----------
-
 	Vorsortierung:
 		- Die 32 TB Daten in 1000 mal 32 GB Chunks aufteilen (32GB um bei der eigentlichen Sortierung den halben Arbeitsspeicher zu benutzen, damit bleiben noch ~32GB für den Output Buffer)
 		- Jeden dieser Chunks mit einem parallelen Mergesort mit Laufzeit O(log n) sortieren und in jeweils eine Datei schreiben (Das Ergebnis hierbei sind 1000 Dateien mit jeweils 32GB --> Chunks)
@@ -55,4 +54,9 @@ Sortierung:
 
 Resultat:
 ---------
-	
+	Lesen/Schreiben:
+		- pro Datei ~43 Sekunden (32GB pro Datei / 750 MB/sek)
+		- 1000 * 43 Sekunden = 43000 Sekunden = ~11.95 Stunden
+
+	Sortieren:
+		
