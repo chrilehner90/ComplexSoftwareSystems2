@@ -100,6 +100,6 @@ Resultat:
 			- Minimum der 1000 Input Buffer suchen und in den Output Buffer schreiben
 			- O(n), n = 1000 = 1 ms
 
-	--> Mit meinen Annahmen fallen die Sortierschritte nicht ins Gewicht. Die Flaschenhälse sind das Lesen von und das Schreiben auf die SSD und die Übertragung über das Netzwerk. Somit würde der Vorgang ungefähr 1 Tag und 8 Stunden dauern, da man 1000 Mal 32 GB lesen und dann 1000 Mal den Output Buffer von 32 GB schreiben muss.
+	--> Mit meinen Annahmen fallen die Sortierschritte nicht ins Gewicht. Die Flaschenhälse sind das Lesen (~12 Stunden) von und das Schreiben (~12 Stunden) auf die SSD und die Übertragung über das Netzwerk (~7,1 Stunden). Somit würde der Vorgang ungefähr 1 Tag und 7 Stunden dauern, da man 1000 Mal 32 GB lesen und dann 1000 Mal den Output Buffer von 32 GB schreiben muss.
 	--> Nimmt man statt 10Gbit Ethernet nur 1 Gbit/s, dann ist die Übertragung über das Netzwerk eindeutig der Flaschenhalt. Hierbei würde die Übertragung über das Netzwerk schon 71 Stunden + fast 24 Stunden, da man wieder 1000 Mal lesen und schreiben muss.
 
