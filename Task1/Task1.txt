@@ -64,7 +64,7 @@ E-Mail Adressen (Annahmen):
 	- Median der Länge von E-Mail Adressen: 19 Zeichen (http://bit.ly/1AxsP5i)
 	- ASCII Codierung: 7 Bit pro Zeichen
 	- 19 Zeichen * 7 Bit = 133 Bit = 16,625 Byte pro Adresse
-	- 32 TB = 32000000000000 / 16,625 = 1.924.812.030.075,2 Adressen = ~ 2 Billionen Adressen
+	- 32 TB = 32000000000000 / 16,625 = 1 924 812 030 075,2 Adressen = ~ 2 Billionen Adressen
 
 
 Übertragung über das Netzwerk:
@@ -76,7 +76,7 @@ Sortierung:
 -----------
 	Vorsortierung:
 		- Die 32 TB Daten in 1000 mal 32 GB Chunks aufteilen (32GB um bei der eigentlichen Sortierung den halben Arbeitsspeicher zu benutzen, damit bleiben noch ~32GB für den Output Buffer)
-		- Jeden dieser Chunks mit einem parallelen Mergesort mit Laufzeit O(log n) sortieren und in jeweils eine Datei schreiben (Das Ergebnis hierbei sind 1000 Dateien mit jeweils 32GB --> Chunks)
+		- Jeden dieser Chunks mit einem parallelen Mergesort mit Laufzeit O(ld n) sortieren und in jeweils eine Datei schreiben (Das Ergebnis hierbei sind 1000 Dateien mit jeweils 32GB --> Chunks)
 
 	Sortierverfahren: Externer (paralleler) Mergesort
 		- Aus jedem der 1000 sortierten Chunks mit jeweils 32 GB den obersten Teil herausnehmen und in je einen Input Buffer schreiben (32GB / 1000 = 32MB pro Input Buffer)
@@ -92,4 +92,14 @@ Resultat:
 		- 1000 * 43 Sekunden = 43000 Sekunden = ~11.95 Stunden
 
 	Sortieren:
+		- Sortierung der 1000 Dateien zu je 32GB (Mindestwert):
+			- Annahme: 1 Sortierschritt dauert 1µs
+			- pro Datei: paralleler Mergesort: O(ld n), n = 1 924 812 030 und pro Sortierschritt 1µs = 1µs * ld(1924812030) = ~ 30,842µs  = 0,000030842 * 1000 = 0,03084 ms
+		- Merge von 1000 Dateien:
+			- Annahme: 1 Sortierschritt dauert 1µs
+			- Minimum der 1000 Input Buffer suchen und in den Output Buffer schreiben
+			- O(n), n = 1000 = 1 ms
+
+	--> Mit meinen Annahmen fallen die Sortierschritte nicht ins Gewicht. Die Flaschenhälse sind das Lesen von und das Schreiben auf die SSD und die Übertragung über das Netzwerk. Somit würde der Vorgang ungefähr 1 Tag und 8 Stunden dauern, da man 1000 Mal 32 GB lesen und dann 1000 Mal den Output Buffer von 32 GB schreiben muss.
+	--> Nimmt man statt 10Gbit Ethernet nur 1 Gbit/s, dann ist die Übertragung über das Netzwerk eindeutig der Flaschenhalt. Hierbei würde die Übertragung über das Netzwerk schon 71 Stunden + fast 24 Stunden, da man wieder 1000 Mal lesen und schreiben muss.
 
