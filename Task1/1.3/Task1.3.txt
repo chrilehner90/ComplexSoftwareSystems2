@@ -1,54 +1,9 @@
- _____         _      _ 
-|_   _|_ _ ___| | __ / |
-  | |/ _` / __| |/ / | |
-  | | (_| \__ \   <  | |
-  |_|\__,_|___/_|\_\ |_|                        
-
-
-1.1.
-====
-
-Ausführungszeit messen:
------------------------
-	Beispiel Ausführungszeit einer Funktion messen:
-		- Startzeit der Messung speichern
-		- Zu messende Funktion aufrufen
-		- Nachdem die zu messende Funktion fertig ist, Endzeit messen
-		- Endzeit - Startzeit = Ausführungszeit der Funktion
-
-	Alternativen:
-		- Schätzen anhand der O-Notation
-		- über das time-Kommandozeilentool
-		- ...
-
-Processor time (CPU Time):
---------------------------
-	Processor time ist die Zeit, die der Prozessor zum Ausführen von Instruktionen in einem Programm braucht, ohne potentiell auftretende Verzögerungen. Die CPU time wird in Ticks oder Sekunden gemessen.
-
-Wall clock time:
-----------------
-	Die Wall-clock time ist die Zeit, die ein Programm insgesamt für die Ausführung braucht, inklusive Verzögerungen durch das Warten auf Ressourcen oder anderen Verzögerungen.
-
-Möglichkeiten um den Speicherverbrauch zu messen:
--------------------------------------------------
-	- valgrind
-	- ps (ist nur reservierter und nicht der tatsächliche Speicherbedarf)
-
-
-Ausführungszeit messen:
------------------------
-	- time: gibt die Anzahl der Sekunden seit dem 01.01.1970 zurück
-	- clock_gettime: bietet Zugriff auf verschiedene Timer mit unterschiedlichen Eigenschaften; Auflösung in Sekunden und Nanosekunden
-		-> CLOCK_REALTIME: ist die eigentliche wall clock time
-		-> CLOCK_MONOTONIC: die komplette Zeit wird gemessen, auch wenn das Programm auf IO warten muss oder sich die gesamte Ausführung aufgrund von anderen Prozessen verlangsamt
-		-> CLOCK_PROCESS_CPUTIME_ID: CPU time, die der Prozess verbraucht
-		-> CLOCK_THREAD_CPUTIME_ID: CPU time, die der Thread verbraucht (nicht unterstützt in Linux)
-	- clock: gibt die CPU Zeit in Ticks zurück, die bis zu einem gewissen Punkt verbraucht wurde. Um die tatsächlichen Sekunden zu erhalten, muss man den Wert durch CLOCKS_PER_SEC dividieren, der von System zu System unterschiedlich ist
-	- rdtsc: gibt den aktuellen CPU cycle count zurück, d.h. wieviele CPU-Zyklen (oben auch Ticks genannt) seit dem letzten Reset gebraucht wurden
-
-
-1.3.
-====
+  _____         _      _   _____ 
+ |_   _|_ _ ___| | __ / | |___ / 
+   | |/ _` / __| |/ / | |   |_ \ 
+   | | (_| \__ \   <  | |_ ___) |
+   |_|\__,_|___/_|\_\ |_(_)____/ 
+                                 
 
 Hardware: 
 ---------
@@ -102,4 +57,3 @@ Resultat:
 
 	--> Mit meinen Annahmen fallen die Sortierschritte nicht ins Gewicht. Die Flaschenhälse sind das Lesen (~12 Stunden) von und das Schreiben (~12 Stunden) auf die SSD und die Übertragung über das Netzwerk (~7,1 Stunden). Somit würde der Vorgang ungefähr 1 Tag und 7 Stunden dauern, da man 1000 Mal 32 GB lesen und dann 1000 Mal den Output Buffer von 32 GB schreiben muss.
 	--> Nimmt man statt 10Gbit Ethernet nur 1 Gbit/s, dann ist die Übertragung über das Netzwerk eindeutig der Flaschenhalt. Hierbei würde die Übertragung über das Netzwerk schon 71 Stunden + fast 24 Stunden, da man wieder 1000 Mal lesen und schreiben muss.
-
