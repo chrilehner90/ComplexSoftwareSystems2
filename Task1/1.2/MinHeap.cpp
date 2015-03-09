@@ -15,16 +15,19 @@ double MinHeap::top() {
 }
 
 void MinHeap::push(double value){
-    // insert at the end
-    values[elements++] = value;
-    unsigned index = elements - 1;
-    unsigned parent = parentIndex(index);
+    // insert at the end of the array
+    unsigned index = elements;
+    values[index] = value;
+    elements++;
+       
+    //find parent to check if heap characteristic is satiesfied
+    unsigned parentIdx = parentIndex(index);
     
-    // upheap
-    while(index != 0 && value < values[parent]) {
-        std::swap(values[index], values[parent]);
-        index = parent;
-        parent = parentIndex(index);
+    // upheap till the heap characteristic is satisfied
+    while(index != 0 && value < values[parentIdx]) {
+       std::swap(values[index], values[parentIdx]);
+       index = parentIdx;
+       parentIdx = parentIndex(index);
     }
 }
 
@@ -38,28 +41,21 @@ double MinHeap::pop(){
     unsigned leftChild = leftChildIndex(index);
     unsigned rightChild = rightChildIndex(index);
     
-    
-    
     unsigned minChildIndex = 0;
     
     do {
-        (values[leftChild] < values[rightChild]) ? minChildIndex = leftChild : minChildIndex = rightChild;
-        /*
-         if(values[leftChild] < values[rightChild]) {
-         minChildIndex = leftChild;
-         }
-         else {
-         minChildIndex = rightChild;
-         }
-         */
+        minChildIndex = getMinChildIndex(index);
+
         if(values[index] > values[minChildIndex]) {
             std::swap(values[index], values[minChildIndex]);
+    
+            index = minChildIndex;
+            leftChild = leftChildIndex(index);
+            rightChild = rightChildIndex(index);
+            minChildIndex = getMinChildIndex(index);
         }
-        
-        index = minChildIndex;
-        leftChild = leftChildIndex(index);
-        rightChild = rightChildIndex(index);
     } while(values[index] > values[minChildIndex] && (rightChild < elements || leftChild < elements));
+    
     return oldRoot;
 }
 
@@ -79,4 +75,14 @@ unsigned MinHeap::rightChildIndex(unsigned index) {
 
 unsigned MinHeap::parentIndex(unsigned index) {
     return (index - 1) / 2;
+}
+
+unsigned MinHeap::getMinChildIndex(unsigned index) {
+    unsigned leftChild = leftChildIndex(index);
+    unsigned rightChild = rightChildIndex(index);
+    unsigned minChildIndex = 0;
+    
+    (values[leftChild] < values[rightChild]) ? minChildIndex = leftChild : minChildIndex = rightChild;
+
+    return minChildIndex;
 }

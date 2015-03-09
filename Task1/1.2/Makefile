@@ -1,10 +1,13 @@
 CXXFLAGS = -Wall -g
 CXX = g++
 
-all: heap run
+all: build run clean
 
-heap:
-	(CXX) $(CXXFLAGS) -o $@ MinHeap.cpp main.cpp
+build:
+	$(CXX) $(CXXFLAGS) -o heap.o MinHeap.cpp main.cpp
+	
+run:
+	./heap.o
 
-run: heap
-	./heap
+clean: 
+	rm -rf heap.o 
