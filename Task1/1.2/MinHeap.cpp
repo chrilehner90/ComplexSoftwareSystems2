@@ -1,9 +1,10 @@
 #include "MinHeap.h"
+#include <stdlib.h>
 
 MinHeap::MinHeap(unsigned newSize){
     elements = 0;
     size = newSize;
-    values = new double(size);
+    values = new double[size];
 }
 
 MinHeap::~MinHeap(){
@@ -22,7 +23,6 @@ void MinHeap::push(double value){
        
     //find parent to check if heap characteristic is satiesfied
     unsigned parentIdx = parentIndex(index);
-    
     // upheap till the heap characteristic is satisfied
     while(index != 0 && value < values[parentIdx]) {
        std::swap(values[index], values[parentIdx]);

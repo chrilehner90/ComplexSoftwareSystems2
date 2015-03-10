@@ -2,10 +2,6 @@
 #include <stdio.h>
 using namespace std;
 
-// erstes Kind: i * 2 + 1;
-// zweite Kind: i * 2 + 2;
-
-
 class MinHeap {
     private:
     
@@ -21,7 +17,7 @@ class MinHeap {
         
     public:
     
-        MinHeap(unsigned size);
+        MinHeap(unsigned newSize);
         ~MinHeap();
 
         void push(double value);

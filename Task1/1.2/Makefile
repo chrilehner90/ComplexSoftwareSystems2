@@ -1,13 +1,18 @@
 CXXFLAGS = -Wall -g
 CXX = g++
+CONFIG = config.p
+RESULT = result.png
 
-all: build run clean
+all: build run plot clean
 
 build:
-	$(CXX) $(CXXFLAGS) -o heap.o MinHeap.cpp main.cpp
+	$(CXX) $(CXXFLAGS) -o heap MinHeap.cpp main.cpp
 	
 run:
-	./heap.o
+	./heap
 
 clean: 
-	rm -rf heap.o 
+	rm -rf heap
+
+plot:
+	gnuplot $(CONFIG) > $(RESULT)
