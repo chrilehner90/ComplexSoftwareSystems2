@@ -9,6 +9,7 @@ set logscale x 2
 set yrange[1:]
 set format x '2^{%L}'
 
+set key left top
 
 plot \
 "data/results0.dat" using (2**$1):2 with errorlines title "NPAD = 0",\
