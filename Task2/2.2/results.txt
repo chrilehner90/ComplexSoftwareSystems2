@@ -1,0 +1,13 @@
+  _____         _      ____    ____  
+ |_   _|_ _ ___| | __ |___ \  |___ \ 
+   | |/ _` / __| |/ /   __) |   __) |
+   | | (_| \__ \   <   / __/ _ / __/ 
+   |_|\__,_|___/_|\_\ |_____(_)_____|
+                                     
+
+I tried to recreate the experiment of Ulrich Drepper's "What every Programmer Should Know About Memory" on page 21 in figure 3.11.
+
+In this paper Ulrich Drepper tried to visualize the different cache levels by filling up a data structure. If the data structure is big enough that it doesn't fit anymore into the L1 chache it will be stored in the slower L2 cache. This shift from one cache level into another can be seen as a plateau. The same shift can be seen from L2 to L3 cache.
+
+I think my plot looks quite similar, but according to the plot of Mr. Drepper he has a different cache configuration.
+It could be that I have bigger L2 caches on my CPU. This could explain why in my graph the shift of the L2 to the L3 cache happens at a later point.
